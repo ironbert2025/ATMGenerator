@@ -1,0 +1,43 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37203.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATMGenerator.UI", "ATMGenerator.UI\ATMGenerator.UI.csproj", "{D34C3FA7-3BCA-41DB-9C36-A2FED343DB8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATMGenerator.Domain", "ATMGenerator.Domain\ATMGenerator.Domain.csproj", "{E6D0F9B9-4D36-47DC-B721-685394CD129D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATMGenerator.Application", "ATMGenerator.Application\ATMGenerator.Application.csproj", "{DD1EF055-878C-4825-887D-1853A64B480F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATMGenerator.Infrastructure", "ATMGenerator.Infrastructure\ATMGenerator.Infrastructure.csproj", "{69DCBF41-C736-4421-A954-E9DB0356B14A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D34C3FA7-3BCA-41DB-9C36-A2FED343DB8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D34C3FA7-3BCA-41DB-9C36-A2FED343DB8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D34C3FA7-3BCA-41DB-9C36-A2FED343DB8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D34C3FA7-3BCA-41DB-9C36-A2FED343DB8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6D0F9B9-4D36-47DC-B721-685394CD129D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6D0F9B9-4D36-47DC-B721-685394CD129D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6D0F9B9-4D36-47DC-B721-685394CD129D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6D0F9B9-4D36-47DC-B721-685394CD129D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD1EF055-878C-4825-887D-1853A64B480F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD1EF055-878C-4825-887D-1853A64B480F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD1EF055-878C-4825-887D-1853A64B480F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD1EF055-878C-4825-887D-1853A64B480F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69DCBF41-C736-4421-A954-E9DB0356B14A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69DCBF41-C736-4421-A954-E9DB0356B14A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69DCBF41-C736-4421-A954-E9DB0356B14A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69DCBF41-C736-4421-A954-E9DB0356B14A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {166515F5-88A7-49C9-803B-476F8E52E9AA}
+	EndGlobalSection
+EndGlobal
