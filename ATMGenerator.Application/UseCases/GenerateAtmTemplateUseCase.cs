@@ -18,12 +18,6 @@ namespace ATMGenerator.Application.UseCases
         }
 
         /// <summary>
-        /// Lógica de negocio:
-        ///   valor1 = Ceiling(inputValue / 1.25)
-        ///   valor2 = valor1 * 3
-        ///   nombre = ATM{valor1}{valor2}
-        /// </summary>
-        /// <summary>
         /// Business logic:
         ///   stopLoss = Ceiling(inputValue / 1.25)
         ///   target   = stopLoss * 3
@@ -33,7 +27,7 @@ namespace ATMGenerator.Application.UseCases
         public (AtmTemplate Template, bool Saved) Execute(double inputValue)
         {
             if (inputValue <= 0)
-                throw new ArgumentException("El valor debe ser mayor que cero.");
+                throw new ArgumentException("Value must be greater than zero.");
 
             int stopLoss = (int)Math.Ceiling(inputValue / 1.25);
             int target = stopLoss * 3;

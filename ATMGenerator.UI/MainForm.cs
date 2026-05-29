@@ -44,8 +44,8 @@ namespace ATMGenerator.UI
         {
             if (!double.TryParse(txtValue.Text.Trim(), out double inputValue) || inputValue <= 0)
             {
-                MessageBox.Show("Ingresa un valor numérico mayor que cero.",
-                                "Valor inválido",
+                MessageBox.Show("Enter a numeric value greater than zero.",
+                                "Invalid value",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Warning);
                 return;
@@ -57,21 +57,21 @@ namespace ATMGenerator.UI
 
                 if (!saved)
                 {
-                    MessageBox.Show($"El archivo ya existe y no fue sobreescrito:\n\n" +
-                                    $"Nombre:    {created.TemplateName}.xml\n" +
+                    MessageBox.Show($"File already exists and was not overwritten:\n\n" +
+                                    $"Name:      {created.TemplateName}.xml\n" +
                                     $"StopLoss:  {created.StopLoss}\n" +
                                     $"Target:    {created.Target}",
-                                    "Archivo existente",
+                                    "File already exists",
                                     MessageBoxButtons.OK,
                                     MessageBoxIcon.Warning);
                     return;
                 }
 
-                MessageBox.Show($"Archivo generado exitosamente:\n\n" +
-                                $"Nombre:    {created.TemplateName}.xml\n" +
+                MessageBox.Show($"File generated successfully:\n\n" +
+                                $"Name:      {created.TemplateName}.xml\n" +
                                 $"StopLoss:  {created.StopLoss}\n" +
                                 $"Target:    {created.Target}",
-                                "Éxito",
+                                "Success",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Information);
 
@@ -79,7 +79,7 @@ namespace ATMGenerator.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al generar el archivo:\n{ex.Message}",
+                MessageBox.Show($"Error generating file:\n{ex.Message}",
                                 "Error",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
