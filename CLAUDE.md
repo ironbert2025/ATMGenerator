@@ -9,19 +9,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 dotnet build
 
 # Run the application
-dotnet run --project ATMCreator.UI
+dotnet run --project ATMGenerator.UI
 ```
 
 There are no test projects and no linting configuration.
 
 ## Architecture
 
-ATMCreator follows Clean Architecture with four projects, each with a strict dependency rule (inner layers have no knowledge of outer layers):
+ATMGenerator follows Clean Architecture with four projects, each with a strict dependency rule (inner layers have no knowledge of outer layers):
 
-- **ATMCreator.Domain** — `AtmTemplate` entity only (`TemplateName`, `StopLoss`, `Target`, `FilePath`). No dependencies.
-- **ATMCreator.Application** — Use cases (`GenerateAtmTemplateUseCase`, `GetAtmTemplatesUseCase`) and the `IAtmTemplateRepository` interface. Depends on Domain only.
-- **ATMCreator.Infrastructure** — `AtmTemplateXmlRepository` implements `IAtmTemplateRepository`. Writes/reads XML files to `C:\Template`. Depends on Domain + Application.
-- **ATMCreator.UI** — WinForms `MainForm`. Wires up use cases by instantiating the infrastructure repository directly (no DI container). Depends on all layers.
+- **ATMGenerator.Domain** — `AtmTemplate` entity only (`TemplateName`, `StopLoss`, `Target`, `FilePath`). No dependencies.
+- **ATMGenerator.Application** — Use cases (`GenerateAtmTemplateUseCase`, `GetAtmTemplatesUseCase`) and the `IAtmTemplateRepository` interface. Depends on Domain only.
+- **ATMGenerator.Infrastructure** — `AtmTemplateXmlRepository` implements `IAtmTemplateRepository`. Writes/reads XML files to `C:\Template`. Depends on Domain + Application.
+- **ATMGenerator.UI** — WinForms `MainForm`. Wires up use cases by instantiating the infrastructure repository directly (no DI container). Depends on all layers.
 
 ## Core Business Logic
 
