@@ -16,15 +16,19 @@ namespace ATMGenerator.Infrastructure.Repositories
         // ──────────────────────────────────────────────
         //  GUARDAR
         // ──────────────────────────────────────────────
-        public void Save(AtmTemplate template)
+        public bool Save(AtmTemplate template)
         {
             EnsureFolderExists();
 
             string filePath = Path.Combine(TemplateFolder, $"{template.TemplateName}.xml");
             template.FilePath = filePath;
 
+            if (File.Exists(filePath))
+                return false;
+
             XDocument doc = BuildXml(template);
             doc.Save(filePath);
+            return true;
         }
 
         // ──────────────────────────────────────────────

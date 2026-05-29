@@ -9,8 +9,8 @@ namespace ATMGenerator.Application.Interfaces
 {
     public interface IAtmTemplateRepository
     {
-        /// <summary>Genera y guarda el archivo XML con los valores calculados.</summary>
-        void Save(AtmTemplate template);
+        /// <summary>Genera y guarda el archivo XML. Retorna false si el archivo ya existe.</summary>
+        bool Save(AtmTemplate template);
 
         /// <summary>Retorna todos los templates existentes en C:/Template ordenados por nombre.</summary>
         List<AtmTemplate> GetAll();
