@@ -40,7 +40,6 @@ namespace ATMGenerator.UI
             this.SuspendLayout();
 
             // ── panelTop ──────────────────────────────
-            this.panelTop.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
             this.panelTop.Controls.Add(this.lblValue);
             this.panelTop.Controls.Add(this.txtValue);
             this.panelTop.Controls.Add(this.btnGenerate);
@@ -51,7 +50,6 @@ namespace ATMGenerator.UI
 
             // ── lblValue ──────────────────────────────
             this.lblValue.AutoSize = true;
-            this.lblValue.ForeColor = System.Drawing.Color.White;
             this.lblValue.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblValue.Location = new System.Drawing.Point(14, 20);
             this.lblValue.Text = "Value:";
@@ -65,10 +63,6 @@ namespace ATMGenerator.UI
             // ── btnGenerate ───────────────────────────
             this.btnGenerate.Text = "Generate";
             this.btnGenerate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnGenerate.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnGenerate.ForeColor = System.Drawing.Color.White;
-            this.btnGenerate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGenerate.FlatAppearance.BorderSize = 0;
             this.btnGenerate.Location = new System.Drawing.Point(185, 14);
             this.btnGenerate.Size = new System.Drawing.Size(90, 32);
             this.btnGenerate.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -76,27 +70,17 @@ namespace ATMGenerator.UI
 
             // ── lblInfo ───────────────────────────────
             this.lblInfo.AutoSize = true;
-            this.lblInfo.ForeColor = System.Drawing.Color.Silver;
             this.lblInfo.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Italic);
             this.lblInfo.Location = new System.Drawing.Point(290, 22);
             this.lblInfo.Text = "stopLoss = Ceiling(value / 1.25)   |   target = stopLoss × 3   |   File: ATM{stopLoss}{target}.xml";
 
             // ── dgvTemplates ──────────────────────────
             this.dgvTemplates.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvTemplates.BackgroundColor = System.Drawing.Color.FromArgb(20, 20, 20);
-            this.dgvTemplates.GridColor = System.Drawing.Color.FromArgb(60, 60, 60);
-            this.dgvTemplates.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(28, 28, 28);
-            this.dgvTemplates.DefaultCellStyle.ForeColor = System.Drawing.Color.White;
             this.dgvTemplates.DefaultCellStyle.Font = new System.Drawing.Font("Consolas", 9F);
-            this.dgvTemplates.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(45, 45, 48);
-            this.dgvTemplates.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
             this.dgvTemplates.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.dgvTemplates.RowHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(45, 45, 48);
-            this.dgvTemplates.RowHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.LightGray;
             this.dgvTemplates.RowHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.dgvTemplates.RowHeadersWidth = 60;
-            this.dgvTemplates.EnableHeadersVisualStyles = false;
-            this.dgvTemplates.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvTemplates.EnableHeadersVisualStyles = true;
 
             // ── MainForm ──────────────────────────────
             this.ClientSize = new System.Drawing.Size(1000, 560);
