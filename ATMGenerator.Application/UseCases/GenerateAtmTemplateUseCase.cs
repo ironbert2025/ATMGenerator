@@ -23,7 +23,10 @@ namespace ATMGenerator.Application.UseCases
         ///   valor2 = valor1 * 3
         ///   nombre = ATM{valor1}{valor2}
         /// </summary>
-        public AtmTemplate Execute(double inputValue)
+        /// <summary>
+        /// Returns (template, saved): saved=false means the file already existed and was not overwritten.
+        /// </summary>
+        public (AtmTemplate Template, bool Saved) Execute(double inputValue)
         {
             if (inputValue <= 0)
                 throw new ArgumentException("El valor debe ser mayor que cero.");
@@ -38,8 +41,8 @@ namespace ATMGenerator.Application.UseCases
                 TemplateName = $"ATM{stopLoss}{target}"
             };
 
-            _repository.Save(template);
-            return template;
+            bool saved = _repository.Save(template);
+            return (template, saved);
         }
     }
 

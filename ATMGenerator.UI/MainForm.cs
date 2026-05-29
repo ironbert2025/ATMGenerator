@@ -52,7 +52,19 @@ namespace ATMGenerator.UI
 
             try
             {
-                AtmTemplate creado = _generateUseCase.Execute(inputValue);
+                var (creado, saved) = _generateUseCase.Execute(inputValue);
+
+                if (!saved)
+                {
+                    MessageBox.Show($"El archivo ya existe y no fue sobreescrito:\n\n" +
+                                    $"Nombre:    {creado.TemplateName}.xml\n" +
+                                    $"StopLoss:  {creado.StopLoss}\n" +
+                                    $"Target:    {creado.Target}",
+                                    "Archivo existente",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                    return;
+                }
 
                 MessageBox.Show($"Archivo generado exitosamente:\n\n" +
                                 $"Nombre:    {creado.TemplateName}.xml\n" +
