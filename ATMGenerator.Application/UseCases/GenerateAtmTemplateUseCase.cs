@@ -24,6 +24,10 @@ namespace ATMGenerator.Application.UseCases
         ///   nombre = ATM{valor1}{valor2}
         /// </summary>
         /// <summary>
+        /// Business logic:
+        ///   stopLoss = Ceiling(inputValue / 1.25)
+        ///   target   = stopLoss * 3
+        ///   name     = ATM{stopLoss}{target}
         /// Returns (template, saved): saved=false means the file already existed and was not overwritten.
         /// </summary>
         public (AtmTemplate Template, bool Saved) Execute(double inputValue)
@@ -47,7 +51,7 @@ namespace ATMGenerator.Application.UseCases
     }
 
     /// <summary>
-    /// Retorna todos los templates guardados en disco.
+    /// Returns all templates saved on disk.
     /// </summary>
     public class GetAtmTemplatesUseCase
     {

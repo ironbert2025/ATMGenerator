@@ -11,13 +11,14 @@ namespace ATMGenerator.UI
 {
     public partial class MainForm : Form
     {
-        // ?? Casos de uso ???????????????????????????????
+        // Use cases
         private readonly GenerateAtmTemplateUseCase _generateUseCase;
         private readonly GetAtmTemplatesUseCase _getUseCase;
 
-        // ?? Constantes del grid ????????????????????????
+        // Grid constants
         private const int GridRows = 15;
         private const int GridCols = 10;
+
         public MainForm()
         {
             InitializeComponent();
@@ -27,24 +28,24 @@ namespace ATMGenerator.UI
             _getUseCase = new GetAtmTemplatesUseCase(repo);
         }
 
-        // ??????????????????????????????????????????????
+        // ──────────────────────────────────────────────
         //  LOAD
-        // ??????????????????????????????????????????????
+        // ──────────────────────────────────────────────
         private void MainForm_Load(object sender, EventArgs e)
         {
-            ConfigurarGrid();
-            CargarTemplatesEnGrid();
+            ConfigureGrid();
+            LoadTemplatesInGrid();
         }
 
-        // ??????????????????????????????????????????????
-        //  BOToN GENERAR
-        // ??????????????????????????????????????????????
-        private void btnGenerar_Click(object sender, EventArgs e)
+        // ──────────────────────────────────────────────
+        //  GENERATE BUTTON
+        // ──────────────────────────────────────────────
+        private void btnGenerate_Click(object sender, EventArgs e)
         {
-            if (!double.TryParse(txtValor.Text.Trim(), out double inputValue) || inputValue <= 0)
+            if (!double.TryParse(txtValue.Text.Trim(), out double inputValue) || inputValue <= 0)
             {
-                MessageBox.Show("Ingresa un valor num�rico mayor que cero.",
-                                "Valor inv�lido",
+                MessageBox.Show("Ingresa un valor numérico mayor que cero.",
+                                "Valor inválido",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Warning);
                 return;
@@ -52,14 +53,14 @@ namespace ATMGenerator.UI
 
             try
             {
-                var (creado, saved) = _generateUseCase.Execute(inputValue);
+                var (created, saved) = _generateUseCase.Execute(inputValue);
 
                 if (!saved)
                 {
                     MessageBox.Show($"El archivo ya existe y no fue sobreescrito:\n\n" +
-                                    $"Nombre:    {creado.TemplateName}.xml\n" +
-                                    $"StopLoss:  {creado.StopLoss}\n" +
-                                    $"Target:    {creado.Target}",
+                                    $"Nombre:    {created.TemplateName}.xml\n" +
+                                    $"StopLoss:  {created.StopLoss}\n" +
+                                    $"Target:    {created.Target}",
                                     "Archivo existente",
                                     MessageBoxButtons.OK,
                                     MessageBoxIcon.Warning);
@@ -67,14 +68,14 @@ namespace ATMGenerator.UI
                 }
 
                 MessageBox.Show($"Archivo generado exitosamente:\n\n" +
-                                $"Nombre:    {creado.TemplateName}.xml\n" +
-                                $"StopLoss:  {creado.StopLoss}\n" +
-                                $"Target:    {creado.Target}",
-                                "�xito",
+                                $"Nombre:    {created.TemplateName}.xml\n" +
+                                $"StopLoss:  {created.StopLoss}\n" +
+                                $"Target:    {created.Target}",
+                                "Éxito",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Information);
 
-                CargarTemplatesEnGrid();
+                LoadTemplatesInGrid();
             }
             catch (Exception ex)
             {
@@ -85,10 +86,10 @@ namespace ATMGenerator.UI
             }
         }
 
-        // ??????????????????????????????????????????????
-        //  CONFIGURAR DATAGRIDVIEW
-        // ??????????????????????????????????????????????
-        private void ConfigurarGrid()
+        // ──────────────────────────────────────────────
+        //  CONFIGURE DATAGRIDVIEW
+        // ──────────────────────────────────────────────
+        private void ConfigureGrid()
         {
             dgvTemplates.Rows.Clear();
             dgvTemplates.Columns.Clear();
@@ -102,78 +103,76 @@ namespace ATMGenerator.UI
             dgvTemplates.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgvTemplates.Font = new Font("Segoe UI", 9);
 
-            // Encabezados de columnas: 1..10
+            // Column headers: 1..10
             for (int c = 0; c < GridCols; c++)
             {
                 dgvTemplates.Columns[c].HeaderText = (c + 1).ToString();
                 dgvTemplates.Columns[c].MinimumWidth = 80;
             }
 
-            // Crear 15 filas vac�as con encabezado de rango
+            // Create 15 empty rows with range headers
             for (int r = 0; r < GridRows; r++)
             {
                 dgvTemplates.Rows.Add();
-                int rangoInicio = (r + 1) * 10;
-                int rangoFin = rangoInicio + 9;
-                dgvTemplates.Rows[r].HeaderCell.Value = $"{rangoInicio}-{rangoFin}";
+                int rangeStart = (r + 1) * 10;
+                int rangeEnd = rangeStart + 9;
+                dgvTemplates.Rows[r].HeaderCell.Value = $"{rangeStart}-{rangeEnd}";
             }
         }
 
-        // ??????????????????????????????????????????????
-        //  CARGAR ARCHIVOS EN EL GRID
-        //  Fila 0 ? StopLoss 10-19
-        //  Fila 1 ? StopLoss 20-29  ... etc.
-        // ??????????????????????????????????????????????
-        private void CargarTemplatesEnGrid()
+        // ──────────────────────────────────────────────
+        //  LOAD FILES INTO GRID
+        //  Row 0 → StopLoss 10-19
+        //  Row 1 → StopLoss 20-29  ... etc.
+        // ──────────────────────────────────────────────
+        private void LoadTemplatesInGrid()
         {
-            // Limpiar celdas
+            // Clear cells
             for (int r = 0; r < GridRows; r++)
                 for (int c = 0; c < GridCols; c++)
                     dgvTemplates.Rows[r].Cells[c].Value = string.Empty;
 
             List<AtmTemplate> templates = _getUseCase.Execute();
 
-            // Contador de posici�n por fila  [filaIndex -> columnaActual]
-            var colPorFila = new Dictionary<int, int>();
+            // Column position counter per row [rowIndex -> currentColumn]
+            var colPerRow = new Dictionary<int, int>();
 
             foreach (AtmTemplate t in templates)
             {
-                // Extraer el n�mero de StopLoss del nombre "ATMXXYY"
-                // El nombre tiene formato ATM + stopLoss + target
-                // Necesitamos el stopLoss para determinar la fila
-                int stopLoss = ExtraerStopLoss(t.TemplateName);
+                // Extract StopLoss number from name "ATMXXYY"
+                // Name format: ATM + stopLoss + target
+                // We need stopLoss to determine the row
+                int stopLoss = ExtractStopLoss(t.TemplateName);
                 if (stopLoss < 10) continue;
 
-                // Fila: fila 0 = rango 10-19, fila 1 = 20-29 ...
-                int filaIndex = (stopLoss / 10) - 1;
-                if (filaIndex < 0 || filaIndex >= GridRows) continue;
+                // Row: row 0 = range 10-19, row 1 = 20-29 ...
+                int rowIndex = (stopLoss / 10) - 1;
+                if (rowIndex < 0 || rowIndex >= GridRows) continue;
 
-                if (!colPorFila.ContainsKey(filaIndex))
-                    colPorFila[filaIndex] = 0;
+                if (!colPerRow.ContainsKey(rowIndex))
+                    colPerRow[rowIndex] = 0;
 
-                int col = colPorFila[filaIndex];
-                if (col >= GridCols) continue;  // m�s de 10 en la misma fila ? ignorar
+                int col = colPerRow[rowIndex];
+                if (col >= GridCols) continue;  // more than 10 in the same row → skip
 
-                dgvTemplates.Rows[filaIndex].Cells[col].Value = t.TemplateName;
-                colPorFila[filaIndex]++;
+                dgvTemplates.Rows[rowIndex].Cells[col].Value = t.TemplateName;
+                colPerRow[rowIndex]++;
             }
         }
 
-        /// <summary>
-        /// Extrae el StopLoss del nombre. 
-        /// El formato es ATM{stopLoss}{target} donde target = stopLoss * 3.
-        /// Ejemplo: ATM2060 ? stopLoss=20
-        /// Estrategia: iterar posibles largos de stopLoss (2..N) hasta que target == stopLoss*3
-        /// </summary>
-        private int ExtraerStopLoss(string name)
+        // Extracts StopLoss from the template name.
+        // Format: ATM{stopLoss}{target} where target = stopLoss * 3.
+        // Example: ATM2060 → stopLoss=20
+        // Strategy: iterate possible stopLoss lengths (2..N) until target == stopLoss * 3
+        private int ExtractStopLoss(string name)
         {
             if (!name.StartsWith("ATM")) return 0;
-            string numeros = name.Substring(3);  // "2060"
+            string numbers = name.Substring(3);  // "2060"
 
-            for (int len = 1; len < numeros.Length; len++)
+            for (int len = 1; len < numbers.Length; len++)
             {
-                if (int.TryParse(numeros.Substring(0, len), out int sl) &&
-                    int.TryParse(numeros.Substring(len), out int tg) &&
+                if (int.TryParse(numbers.Substring(0, len), out int sl) &&
+                    int.TryParse(numbers.Substring(len), out int tg) &&
                     tg == sl * 3)
                     return sl;
             }

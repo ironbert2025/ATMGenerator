@@ -14,7 +14,7 @@ namespace ATMGenerator.Infrastructure.Repositories
         private const string TemplateFolder = @"C:\Template";
 
         // ──────────────────────────────────────────────
-        //  GUARDAR
+        //  SAVE
         // ──────────────────────────────────────────────
         public bool Save(AtmTemplate template)
         {
@@ -32,7 +32,7 @@ namespace ATMGenerator.Infrastructure.Repositories
         }
 
         // ──────────────────────────────────────────────
-        //  LEER TODOS
+        //  READ ALL
         // ──────────────────────────────────────────────
         public List<AtmTemplate> GetAll()
         {
@@ -55,7 +55,7 @@ namespace ATMGenerator.Infrastructure.Repositories
         }
 
         // ──────────────────────────────────────────────
-        //  PRIVADOS
+        //  PRIVATE
         // ──────────────────────────────────────────────
         private void EnsureFolderExists()
         {
@@ -64,8 +64,8 @@ namespace ATMGenerator.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Construye el XML con el mismo formato que ATM1030.xml
-        /// reemplazando Template, StopLoss y Target.
+        /// Builds the XML in the same format as ATM1030.xml,
+        /// replacing Template, StopLoss and Target with dynamic values.
         /// </summary>
         private XDocument BuildXml(AtmTemplate t)
         {
@@ -97,7 +97,7 @@ namespace ATMGenerator.Infrastructure.Repositories
                         new XElement("IsOverlay", "false"),
                         new XElement("SelectedValueSeries", "0"),
                         new XElement("Gtd", "1800-01-01T00:00:00"),
-                        new XElement("Template", t.TemplateName),   // ← dinámico
+                        new XElement("Template", t.TemplateName),   // ← dynamic
                         new XElement("TimeInForce", "Gtc"),
                         new XElement("BarsRequiredToTrade", "0"),
                         new XElement("Category", "Atm"),
@@ -133,8 +133,8 @@ namespace ATMGenerator.Infrastructure.Repositories
                         new XElement("Brackets",
                             new XElement("Bracket",
                                 new XElement("Quantity", "1"),
-                                new XElement("StopLoss", t.StopLoss),   // ← dinámico
-                                new XElement("Target", t.Target)      // ← dinámico
+                                new XElement("StopLoss", t.StopLoss),   // ← dynamic
+                                new XElement("Target", t.Target)      // ← dynamic
                             )
                         ),
                         new XElement("CalculationMode", "Ticks"),
